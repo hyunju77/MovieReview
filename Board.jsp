@@ -22,6 +22,16 @@
             <td>글쓴이</td>
             <td>작성일</td>
         </thead>
+        <script>
+            $(function(){
+                $(".rowClick").click(function()  {
+                    alert($(this).children().eq(0).text());
+                    var boardno = $(this).children().eq(0).text();
+
+                    location.href="boardDetail.do?boardno=" + boardno;
+                })
+            })
+        </script>
         <tbody class="text-center">
             <c:forEach items = "${board}" var="board">
                 <tr>
@@ -34,5 +44,6 @@
                 </tr> <!--</c:out> ?-->
             </c:forEach>
             </tbody>
+
     </body>
 </html>
