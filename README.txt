@@ -19,3 +19,15 @@
 7. 상세보기를 위해 컨트롤러에서 새로운 RequestMapping 만들기
 
 8. sql-mapper-config.xml에서 만든 VO를 Alias 하기
+
+9. 컨트롤러에서 상세보기를 위한 새로운 RequestMapping 만들기
+
+10. sql-mapper-config.xml에서 만든 VO를 Alias 하기
+
+# 게시글 작성 
+
+11. 글쓰기 버튼
+
+12. jsp 버튼 누르면 글작성 form으로 이동할 수 있드록 스크립트단 만들어주기
+
+13. 컨트롤러에서 boardInsertForm 맵핑
