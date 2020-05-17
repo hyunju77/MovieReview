@@ -20,7 +20,7 @@
 
 8. sql-mapper-config.xml에서 만든 VO를 Alias 하기
 
-9. 컨트롤러에서 상세보기를 위한 새로운 RequestMapping 만들기
+	9. 컨트롤러에서 상세보기를 위한 새로운 RequestMapping 만들기
 
 10. sql-mapper-config.xml에서 만든 VO를 Alias 하기
 
