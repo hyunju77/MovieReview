@@ -8,7 +8,8 @@ public class BoardController {
         List<EgovMap> boardList=null;
         try {
             boardList = boardService.selectBoardList ();
-        } catch (Excption e) {
+        }
+        catch (Excption e) {
             e.printStackTrace ();
         }
         model.addAttribute ("boardList", boardList);
@@ -26,15 +27,12 @@ public class BoardController {
         try {
             boardVO = boardService.detailBoard(boardnoInt);
             //DB에서 값들을 가져와 boardVO에 저장
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-    }
+        }
     model.addAttribute("boardVO", boardVO);
     return "board/boardDetail.tiles";
-}
+    }
 
 }
-
-
-
-
