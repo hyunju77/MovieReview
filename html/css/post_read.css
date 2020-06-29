@@ -2,21 +2,17 @@ nav {
     background-color: #626586;
     float:left;
     display: table-cell;
-}
-
-#myNav {
     padding: 5pt 0.5% 5pt 0.5%;
     width: 12%;
+    height: 518pt;
 }
 
 section {
     background-color: #e3e3e3;
     text-align:left;
     float:right;
-}
-
-#mySection {
     display: table-cell;
     width: 85%;
     padding: 5pt 1% 5pt 1%;
+    height: 518pt
 }

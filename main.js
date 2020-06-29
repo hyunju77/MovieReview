@@ -11,6 +11,7 @@ const url = require('url');
 const path = require('path');
 const http = require('http');
 const qs = require('querystring');
+const { GetFormatDate } = require('./html/js/template.js');
 
 var port = hostinfo.port;
 var database = mysql.createConnection({
@@ -138,7 +139,6 @@ app.post(`/delete_process`, function(request, response) {
   request.on(`end`, function() {
     var post = qs.parse(body);
     var filteredId = post.id;
-    var post = qs.parse(body);
     database.query('DELETE FROM posts WHERE post_id = ?', [filteredId], function(error, result){
       if(error) {
         throw error;
@@ -158,7 +158,7 @@ app.get(`/create`, function(request, response) {
       throw error;
     }
     
-    var movies = "<select>";
+    var movies = `<select name="movie_name">`;
     for(var count in rows) {
       movies += `<option value="${count}">${rows[count].name}</option>`;
     }
@@ -172,10 +172,10 @@ app.get(`/create`, function(request, response) {
         <title>게시물 작성</title>
       </head>
       <body>
-        <form name="post_editer" action="/crafte_process" method="post" onsubmit="return data_integrity()">
-            <p><input type="text" id="edit_title" name="edit_title" placeholder = "제목(생략가능)"></input></p>
-            영화 제목 : ${movies}<input type="hidden">
-            <p><textarea id="edit_description" name="edit_description" placeholder = "내용"></textarea><p>
+        <form name="post_editer" action="/create_process" method="post" onsubmit="return data_integrity()">
+            <p><input type="text" name="edit_title" placeholder = "제목(생략가능)"></input></p>
+            영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="관리자">
+            <p><textarea name="edit_description" placeholder = "내용"></textarea><p>
             <p><input type="submit"><input type="button" onclick="console.log(data_integrity())"></P>
         </form>
         <script src="js/data_integrity.js"></script>
@@ -188,7 +188,40 @@ app.get(`/create`, function(request, response) {
 });
 
 app.post(`/create_process`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var edit = qs.parse(body);
+    var title = edit.edit_title;
+    var movie = new Number(edit.movie_name);
+    var description = edit.edit_description;
+    var nickname = edit.user_nickname;
+    var user_id;
 
+    if(title == undefined || title == "undefined") {
+      title = "";
+    }
+    var movie_id =  movie + 1;    
+    var date = new Date();
+    var createdate = GetFormatDate(date);
+
+    sql = `SELECT user_id FROM users WHERE nickname = "${nickname}";`;
+    database.query(sql, function(error, rows) {
+      user_id = rows[0].user_id;
+
+      var sql = "INSERT INTO `moviereview`.`posts` (`title`, `description`, `createdate`, `user_id`, `movie_id`) VALUES ('" + title + "', '" + description + "', '" + createdate + "', '" + user_id + "', '" + movie_id + "');"
+
+      database.query(sql, function(error, result){
+        if(error) {
+          throw error;
+        }
+        response.writeHead(302, {Location: `/post_id=${result.insertId}`});
+        response.end();
+      })
+    });
+  });
 });
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));

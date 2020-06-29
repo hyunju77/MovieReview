@@ -14,6 +14,9 @@ function data_integrity() {
         alert("제목의 길이가 초과됬습니다!\n(최대 255자)");
         return false;
     }
+    if(data.edit_title.value.length == 0) {
+        data.edit_title.value = "undefined";
+    }
     if(data.edit_description.value.length == 0) {
         alert("내용을 입력해주십시오.");
         return false;
@@ -24,5 +27,3 @@ function data_integrity() {
     }
     return true;
 }
-
-      
