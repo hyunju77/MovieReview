@@ -153,6 +153,14 @@ app.post(`/delete_process`, function(request, response) {
   });    
 });
 
+app.post(`/create`, function(request, response) {
+
+});
+
+app.post(`/create_process`, function(request, response) {
+
+});
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
 
 /*
