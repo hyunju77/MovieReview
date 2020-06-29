@@ -37,7 +37,8 @@ app.get('/', function(request, response) {                          //라우팅
 
       var table = ""
       for(var count in rows) {
-        table += `<tr><td>` + rows[count].post_id + `</td>`
+        var numbering = new Number(count);
+        table += `<tr><td>` + (numbering+1) + `</td>`
         if (rows[count].post == null) {
           table += `<td><a href="/post_id=` + rows[count].post_id + `">"` + rows[count].movie + `"에 대한 리뷰</a></td>`
         } else {
@@ -121,9 +122,18 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
                   WHERE post_id = ${filteredId}`;
       database.query(sql, function(error, rows) {
         var html = template.HTML("영화 리뷰 사이트", rows[0].title, rows[0].createdate, rows[0].modifydate, rows[0].description, `
-          <form action="/delete_process" method="post">
+          <form action="/" method="get">
+            <input type="submit" value="돌아가기" href="/">
+          </form>
+        `,`
+          <form action="/update" method="post">
             <input type="hidden" name="id" value="${filteredId}">
-            <input type="submit" value="delete">
+            <input type="button" value="변경">
+          </form>
+        `,`
+          <form action="/delete_process" method="post" onsubmit="return recheck()">
+            <input type="hidden" name="id" value="${filteredId}">
+            <input type="submit" value="삭제">
           </form>
         `);
         response.send(html);
@@ -176,9 +186,9 @@ app.get(`/create`, function(request, response) {
             <p><input type="text" name="edit_title" placeholder = "제목(생략가능)"></input></p>
             영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="관리자">
             <p><textarea name="edit_description" placeholder = "내용"></textarea><p>
-            <p><input type="submit"><input type="button" onclick="console.log(data_integrity())"></P>
+            <p><input type="submit">
         </form>
-        <script src="js/data_integrity.js"></script>
+        <script src="js/html_functions.js"></script>
       </body>
     </html>
     `;

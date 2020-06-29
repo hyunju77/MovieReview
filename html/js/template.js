@@ -1,15 +1,10 @@
 module.exports = {
-  HTML:function(title, sectiontitle, createdate, modifydate, body, control) {
+  HTML:function(title, sectiontitle, createdate, modifydate, body, back, modify, remove) {
     if(modifydate == null){
       var create_modify_date = `<h5>게시일 : ${createdate}</h5>`;
     } else {
       var create_modify_date = `<h5>게시일 : ${createdate} (수정됨 : ${modifydate})</h5>`;
     }
-
-    if(!control) {
-      control = "";
-    }
-
 
     return `
       <!DOCTYPE html>
@@ -26,9 +21,9 @@ module.exports = {
 
               <div id="myMenu">
                   <div class="h-container">
-                      <div class="item middle">menu 1</div>
-                      <div class="item middle">menu 2</div>
-                      <div class="item middle">menu 3</div>
+                      <div class="item middle">${back}</div>
+                      <div class="item middle">${modify}</div>
+                      <div class="item middle">${remove}</div>
                       <div class="item last">login</div>
                   </div>
               </div>
@@ -47,9 +42,9 @@ module.exports = {
                   <h3>${sectiontitle}</h3>
                   ${create_modify_date}
                   ${body}
-                  ${control}
                 </section>
               </nav>
+              <script src="js/html_functions.js"></script>
           </body>
       </html>
     `;

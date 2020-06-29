@@ -27,3 +27,12 @@ function data_integrity() {
     }
     return true;
 }
+
+//삭제 확인 스크립트
+function recheck() {
+    if(confirm("이 게시물을 삭제하시겠습니까?\n삭제된 게시물의 내용은 복구할 수 없습니다.")) {
+        return true;
+    } else {
+        return false;
+    }
+}

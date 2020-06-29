@@ -14,5 +14,6 @@ section {
     display: table-cell;
     width: 85%;
     padding: 5pt 1% 5pt 1%;
-    height: 518pt
+    height: 518pt;
+    overflow: auto;
 }
