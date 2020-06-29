@@ -24,13 +24,13 @@ module.exports = {
                         </form>
                       </div>
                       <div class="item middle">
-                        <form action="/update" method="post">
+                        <form action="/post_update" method="post">
                           <input type="hidden" name="id" value="${post_data.post_id}">
                           <input type="submit" value="변경">
                         </form>
                       </div>
                       <div class="item middle">
-                        <form action="/delete_process" method="post" onsubmit="return recheck()">
+                        <form action="/post_delete_process" method="post" onsubmit="return recheck()">
                           <input type="hidden" name="id" value="${post_data.post_id}">
                           <input type="submit" value="삭제">
                         </form>
@@ -55,6 +55,12 @@ module.exports = {
                   ${post_data.description}
                 </section>
                 <div>
+                  <form name="comment_editer" action="/comment_create_process" method="post" onsubmit="return comment_data_intergrity()">
+                    <input type="hidden" name="post_id" value="${post_data.post_id}">
+                    <input type="hidden" name="user_id" value="1">
+                    <input type="text" name="edit_description" placeholder="댓글 입력">
+                    <input type="submit" value="등록">
+                  </form>
                   <table border = 1 id="comments">
                     <tr>
                       <th>닉네임</th>
@@ -76,7 +82,7 @@ module.exports = {
     if(arguments.length == 1) {
       var back = ``
       var form = `
-      <form name="post_editer" action="/create_process" method="post" onsubmit="return data_integrity()">
+      <form name="post_editer" action="/post_create_process" method="post" onsubmit="return post_data_integrity()">
         <p><input type="text" name="edit_title" placeholder = "제목(생략가능)"></input></p>
         영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="관리자">
         <p><textarea name="edit_description" placeholder = "내용"></textarea><p>
@@ -86,7 +92,7 @@ module.exports = {
     } else {
       var back = `post_id=${post_data.post_id}`
       var form = `
-        <form name="post_editer" action="/update_process" method="post" onsubmit="return data_integrity()">
+        <form name="post_editer" action="/post_update_process" method="post" onsubmit="return post_data_integrity()">
           <input type="hidden" name="post_id" value="${post_data.post_id}">
           <p><input type="text" name="edit_title" placeholder = "제목(생략가능)" value="${post_data.title}"></input></p>
           영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="${post_data.nickname}">

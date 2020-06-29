@@ -11,7 +11,6 @@ const url = require('url');
 const path = require('path');
 const http = require('http');
 const qs = require('querystring');
-const { GetFormatDate } = require('./html/js/template.js');
 
 var port = hostinfo.port;
 var database = mysql.createConnection({
@@ -72,7 +71,7 @@ app.get('/', function(request, response) {                          //라우팅
               </header>
               <div id="myMenu">
                   <div class="h-container">
-                      <div class="item middle"><a href="/create">리뷰 등록</a></div>
+                      <div class="item middle"><a href="/posts_create">리뷰 등록</a></div>
                       <div class="item middle">
                         <form action="/movie_registration" method="post">
                           <input type="submit" value="영화 등록">
@@ -118,50 +117,50 @@ app.get('/', function(request, response) {                          //라우팅
 }
 
 {//포스트 열람 (Read)
-  app.get(`/post_id=` + `:postId`, function(request, response) {
-    fs.readdir(`./data`, function(error, filelist) {
-      var filteredId = path.parse(request.params.postId).base;
-      var sql = `SELECT a.title, c.name, a.description, b.nickname, date_format(a.createdate, "%Y-%m-%d") AS createdate, date_format(a.modifydate, "%Y-%m-%d") AS modifydate
-                  FROM posts AS a
-                  JOIN users AS b ON b.user_id = a.user_id
-                  JOIN movies AS c ON c.movie_id = a.movie_id
-                  WHERE post_id = ${filteredId};`;
-      database.query(sql, function(error, rows) {
-        var post_data = rows[0];
-        post_data.post_id = filteredId;
-        var sql = `SELECT b.nickname, a.description, a.score, date_format(a.createdate, "%Y-%m-%d") AS createdate
-                    FROM comments AS a
-                    JOIN users AS b
-                    ON a.user_id = b.user_id
-                    WHERE a.post_id = ${post_data.post_id};`
-        database.query(sql, function(error, rows){
-          var comment = new Array();
-          for(var count in rows) {
-            comment[count] = rows[count];
-          }
+app.get(`/post_id=` + `:postId`, function(request, response) {
+  fs.readdir(`./data`, function(error, filelist) {
+    var filteredId = path.parse(request.params.postId).base;
+    var sql = `SELECT a.title, c.name, a.description, b.nickname, date_format(a.createdate, "%Y-%m-%d") AS createdate, date_format(a.modifydate, "%Y-%m-%d") AS modifydate
+                FROM posts AS a
+                JOIN users AS b ON b.user_id = a.user_id
+                JOIN movies AS c ON c.movie_id = a.movie_id
+                WHERE post_id = ${filteredId};`;
+    database.query(sql, function(error, rows) {
+      var post_data = rows[0];
+      post_data.post_id = filteredId;
+      var sql = `SELECT b.nickname, a.description, a.score, date_format(a.createdate, "%Y-%m-%d") AS createdate
+                  FROM comments AS a
+                  JOIN users AS b
+                  ON a.user_id = b.user_id
+                  WHERE a.post_id = ${post_data.post_id};`
+      database.query(sql, function(error, rows){
+        var comment = new Array();
+        for(var count in rows) {
+          comment[count] = rows[count];
+        }
 
-          var comment_table = ""
-          for(var count in comment) {
-            comment_table += `
-              <tr>
-                <td>${comment[count].nickname}</td>
-                <td>${comment[count].description}</td>
-                <td>${comment[count].score}</td>
-                <td>${comment[count].createdate}</td>
-              </tr>
-            `
-          }            
+        var comment_table = ""
+        for(var count in comment) {
+          comment_table += `
+            <tr>
+              <td>${comment[count].nickname}</td>
+              <td>${comment[count].description}</td>
+              <td>${comment[count].score}</td>
+              <td>${comment[count].createdate}</td>
+            </tr>
+          `
+        }            
 
-          var html = template.Post_Reader_HTML("영화 리뷰 사이트", post_data, comment_table);
-          response.send(html);
-        });
+        var html = template.Post_Reader_HTML("영화 리뷰 사이트", post_data, comment_table);
+        response.send(html);
       });
     });
   });
+});
 }
 
 {//포스트 등록 화면 (Create)
-app.get(`/create`, function(request, response) {
+app.get(`/posts_create`, function(request, response) {
   var sql = `SELECT name FROM movies`
   database.query(sql, function(error, rows) {
     if(error) {
@@ -182,7 +181,7 @@ app.get(`/create`, function(request, response) {
 }
 
 {//포스트 등록 프로세서
-app.post(`/create_process`, function(request, response) {
+app.post(`/posts_create_process`, function(request, response) {
   var body = ""
   request.on('data', function(data){
     body = body + data;
@@ -221,7 +220,7 @@ app.post(`/create_process`, function(request, response) {
 }
 
 {//포스트 수정 화면 (Update)
-app.post(`/update`, function(request, response) {
+app.post(`/post_update`, function(request, response) {
   var body = ""
   request.on('data', function(data){
     body = body + data;
@@ -259,7 +258,7 @@ app.post(`/update`, function(request, response) {
 }
 
 {//포스터 수정 프로세서
-app.post(`/update_process`, function(request, response) {
+app.post(`/post_update_process`, function(request, response) {
   var body = ""
   request.on('data', function(data){
     body = body + data;
@@ -298,7 +297,7 @@ app.post(`/update_process`, function(request, response) {
 }
 
 {//포스트 삭제 (Delete)
-app.post(`/delete_process`, function(request, response) {
+app.post(`/post_delete_process`, function(request, response) {
   var body = ""
   request.on('data', function(data){
     body = body + data;
@@ -317,6 +316,10 @@ app.post(`/delete_process`, function(request, response) {
     });
   });    
 });
+}
+
+{//댓글 추가
+
 }
 
 

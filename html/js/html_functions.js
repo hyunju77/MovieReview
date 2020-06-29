@@ -8,7 +8,7 @@ function is_not_date(d) {
 }
 
 //게시물 수정, 저장 전 유효성 검사
-function data_integrity() {
+function post_data_integrity() {
     var data = document.post_editer
     if(data.edit_title.value.length > 255) {
         alert("제목의 길이가 초과됬습니다!\n(최대 255자)");
@@ -23,6 +23,21 @@ function data_integrity() {
     }
     if(data.edit_description.value.length > 65535) {
         alert("내용이 너무 깁니다.\n(최대 65535자)");
+        return false;
+    }
+    return true;
+}
+
+function comment_data_intergrity() {
+    var data = document.comment_editer;
+    if(comment_editer.edit_description.value.length == 0) {
+        alert("내용을 입력해 주시오.");
+        comment_editer.edit_description.focus();
+        return false;
+    }
+    if(comment_editer.edit_description.value.length > 255) {
+        alert("댓글 길이가 초과했습니다.\n(최대 255자)");
+        comment_editer.edit_description.focus();
         return false;
     }
     return true;
