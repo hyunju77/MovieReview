@@ -1,10 +1,22 @@
+header {
+    background-color: #d1d2e7;
+    height: 180px;
+    width: 98%;
+    padding: 1%;
+    color: black;
+}
+
 body>div {
     background-color: #ffffff;
     padding-top: 5pt;
     padding-bottom: 10pt;
 }
 
-.h-container:after{ clear: both; display: block; content: '' }
+.h-container:after{
+    clear: both;
+    display: block;
+    content: ''
+}
 /*:after*/
 
 .h-container .item {
