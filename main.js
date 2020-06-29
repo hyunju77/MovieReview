@@ -127,22 +127,27 @@ app.get('/', function(request, response) {                          //라우팅
                   JOIN movies AS c ON c.movie_id = a.movie_id
                   WHERE post_id = ${filteredId}`;
       database.query(sql, function(error, rows) {
-        var html = template.Post_Reader_HTML("영화 리뷰 사이트", rows[0].title, rows[0].createdate, rows[0].modifydate, rows[0].description, `
-          <form action="/" method="get">
-            <input type="submit" value="돌아가기" href="/">
-          </form>
-        `,`
-          <form action="/update" method="post">
-            <input type="hidden" name="id" value="${filteredId}">
-            <input type="submit" value="변경">
-          </form>
-        `,`
-          <form action="/delete_process" method="post" onsubmit="return recheck()">
-            <input type="hidden" name="id" value="${filteredId}">
-            <input type="submit" value="삭제">
-          </form>
-        `);
-        response.send(html);
+        var post_data = rows[0];
+        var sql = `SELECT * FROM comment WHERE post_id = ${post_id}`
+        database.query(sql, function(error, rows){
+
+          var html = template.Post_Reader_HTML("영화 리뷰 사이트", post_data.title, post_data.createdate, post_data.modifydate, post_data.description, `
+            <form action="/" method="get">
+              <input type="submit" value="돌아가기" href="/">
+            </form>
+          `,`
+            <form action="/update" method="post">
+              <input type="hidden" name="id" value="${filteredId}">
+              <input type="submit" value="변경">
+            </form>
+          `,`
+            <form action="/delete_process" method="post" onsubmit="return recheck()">
+              <input type="hidden" name="id" value="${filteredId}">
+              <input type="submit" value="삭제">
+            </form>
+          `);
+          response.send(html);
+        });
       });
     });
 });
@@ -220,6 +225,7 @@ app.post(`/update`, function(request, response) {
 
     sql = `SELECT * FROM posts WHERE post_id = ${post_id}`;    
     database.query(sql, function(error, rows) {
+      
       var title = rows[0].title;
       var description = rows[0].description;
       var movie_id = new Number(rows[0].movie_id);

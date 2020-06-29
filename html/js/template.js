@@ -1,5 +1,5 @@
 module.exports = {
-  Post_Reader_HTML:function(title, sectiontitle, createdate, modifydate, body, back, modify, remove) {
+  Post_Reader_HTML:function(title, sectiontitle, createdate, modifydate, description, back, modify, remove) {
     if(modifydate == null){
       var create_modify_date = `<h5>게시일 : ${createdate}</h5>`;
     } else {
@@ -36,10 +36,10 @@ module.exports = {
                         <a href=""><li>(2010~2020)</li></a>
                     </ul>
                 </nav>
-                <section id="mySection">
+                <section id="post_Section">
                   <h3>${sectiontitle}</h3>
                   ${create_modify_date}
-                  ${body}
+                  ${description}
                 </section>
               </nav>
               <script src="js/html_functions.js"></script>
@@ -100,6 +100,13 @@ module.exports = {
       </body>
     </html>
     `;
+  },
+
+  comment_part_HTML:function() {
+
+    return `
+
+    `
   },
 
   GetFormatDate:function(date) {
