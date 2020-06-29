@@ -1,3 +1,7 @@
+#warapper {
+    display: table;
+    width: 100%;
+}
 
 nav {
     background-color: #626586;

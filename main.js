@@ -70,7 +70,7 @@ app.get('/', function(request, response) {                          //라우팅
               </header>
               <div id="myMenu">
                   <div class="h-container">
-                      <div class="item middle">menu 1</div>
+                      <div class="item middle"><a href="/create">리뷰 등록</a></div>
                       <div class="item middle">menu 2</div>
                       <div class="item middle">menu 3</div>
                       <div class="item last">login</div>
@@ -142,8 +142,6 @@ app.post(`/delete_process`, function(request, response) {
     database.query('DELETE FROM posts WHERE post_id = ?', [filteredId], function(error, result){
       if(error){
         throw error;
-      } else {
-        alert("삭제되었습니다.")
       }
       fs.unlink(`post_id=${filteredId}`, function(error) {
         response.writeHead(302, {Location: `/`});
@@ -153,8 +151,25 @@ app.post(`/delete_process`, function(request, response) {
   });    
 });
 
-app.post(`/create`, function(request, response) {
-
+app.get(`/create`, function(request, response) {
+  var html = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title>게시물 작성</title>
+    </head>
+    <body>
+      <form action="/crafte_process" method="post">
+        <p><input type="text" name="edit_title" placeholder = "제목"></text></p>
+        <p><textarea name="edit_description" placeholder = "내용"></textarea></p>
+        <p><input type="submit" value="submit"></P>
+      </form>
+    </body>
+  </html>
+  `;
+  
+  response.send(html);
 });
 
 app.post(`/create_process`, function(request, response) {

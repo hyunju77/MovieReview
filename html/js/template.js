@@ -17,10 +17,6 @@ module.exports = {
 	<head>
 		<meta charset="utf-8">
         <title>${title}</title>
-        <style>
-            body {background-color: azure;}
-            #warapper {display: table; width: 100%;}
-        </style>
         <script src="js/jquery-3.5.1.min.js"></script>
         <link rel="stylesheet" href="css/commen.css">
         <link rel="stylesheet" href="css/post_read.css">
