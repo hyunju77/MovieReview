@@ -1,103 +1,103 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
+	<head>
+		<title></title>
 
-<style>
-.ex-layout{
-	width: 500px;
-}
-.ex-layout .gnb{
-	padding: 15px;
-	background-color: skyblue;
-}
-.ex-layout .main{
-	background-color: white;
-}
-.ex-layout .main:after{ clear: both; display: block; content: '' }
+		<style>
+		.ex-layout{
+			width: 500px;
+		}
+		.ex-layout .gnb{
+			padding: 15px;
+			background-color: skyblue;
+		}
+		.ex-layout .main{
+			background-color: white;
+		}
+		.ex-layout .main:after{ clear: both; display: block; content: '' }
 
-.ex-layout .main .lnb{
-	float: left;
-	width: 100px;
-	height: 254px;
-	background-color: orange;
-}
-.ex-layout .main .content{
-	float: left;
-	width: 400px;
-}
-.ex-layout .footer{
-	padding: 15px;
-	background-color: #ddd;
-}
-.clearfix { clear: both; content: ''; display: block }
+		.ex-layout .main .lnb{
+			float: left;
+			width: 100px;
+			height: 254px;
+			background-color: orange;
+		}
+		.ex-layout .main .content{
+			float: left;
+			width: 400px;
+		}
+		.ex-layout .footer{
+			padding: 15px;
+			background-color: #ddd;
+		}
+		.clearfix { clear: both; content: ''; display: block }
 
-.my-site {
-	background-color: white;
-}
-.my-site .header {
-	background-color: #01579B;
-	height: 70px;
-}
-.my-site .gnb {
-	border-bottom: 1px solid #ddd;
-}
-.my-site .gnb > div {
-	float: left;
-	width: 100px;
-	text-align: center;
-	height: 30px; 
-	border-right: 1px solid #ddd;
-}
-.my-site .gnb > div.selected {
-	background: #70acdc;
-}
-.my-site .main .lnb {
-	float: left;
-	width: 25%;
-	background-color: #f3f3f3;
-	height: 300px;
-}
-.my-site .main .article {
-	float: left;
-	width: 75%;
-}
-.my-site .footer {
-	background-color: #f0f0f0;
-	border-top: 1px solid #ddd;
-	height: 40px;
-}
-</style>
-</head>
-<body>
-1
-<div class="ex-layout">
-	<div class="gnb">Global menu</div>
-	<div class="main">
-		<div class="lnb">Left menu</div>
-		<div class="content">
-			Content area
+		.my-site {
+			background-color: white;
+		}
+		.my-site .header {
+			background-color: #01579B;
+			height: 70px;
+		}
+		.my-site .gnb {
+			border-bottom: 1px solid #ddd;
+		}
+		.my-site .gnb > div {
+			float: left;
+			width: 100px;
+			text-align: center;
+			height: 30px; 
+			border-right: 1px solid #ddd;
+		}
+		.my-site .gnb > div.selected {
+			background: #70acdc;
+		}
+		.my-site .main .lnb {
+			float: left;
+			width: 25%;
+			background-color: #f3f3f3;
+			height: 300px;
+		}
+		.my-site .main .article {
+			float: left;
+			width: 75%;
+		}
+		.my-site .footer {
+			background-color: #f0f0f0;
+			border-top: 1px solid #ddd;
+			height: 40px;
+		}
+		</style>
+	</head>
+	<body>
+		1
+		<div class="ex-layout">
+			<div class="gnb">Global menu</div>
+			<div class="main">
+			<div class="lnb">Left menu</div>
+			<div class="content">
+				Content area
+			</div>
+			</div>
+			<div class="footer">
+				Footer area
+			</div>
 		</div>
-	</div>
-	<div class="footer">
-		Footer area
-	</div>
-</div>
-<br>2
-<div class="my-site">
-	<div class="header"><br>page_title</div>
-	<div class="gnb clearfix">
-		<div></div>
-		<div class="selected">menu</div>
-		<div></div>
-	</div>
-	<div class="main clearfix">
-		<div class="lnb">nav</div>
-		<div class="article">article</div>
-	</div>
-	<div class="footer"></div>
-</div>
+		<br>2
+		<div class="my-site">
+			<div class="header"><br>page_title</div>
+			<div class="gnb clearfix">
+			<div></div>
+			<div class="selected">menu</div>
+			<div></div>
+			</div>
+			<div class="main clearfix">
+			<div class="lnb">nav</div>
+			<div class="article">article</div>
+			</div>
+			<div class="footer"></div>
+		</div>
 
 
-</body>
+	</body>
 </html>
