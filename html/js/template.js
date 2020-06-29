@@ -1,13 +1,16 @@
 module.exports = {
-  HTML:function(title, sectiontitle, createdate, modifydate, body) {
-    if(!createdate) {
-
-    }
-    else if(modifydate == null){
+  HTML:function(title, sectiontitle, createdate, modifydate, body, control) {
+    if(modifydate == null){
       var create_modify_date = `<h5>게시일 : ${createdate}</h5>`;
     } else {
       var create_modify_date = `<h5>게시일 : ${createdate} (수정됨 : ${modifydate})</h5>`;
     }
+
+    if(!control) {
+      control = "";
+    }
+
+
     return `
     <!DOCTYPE html>
 <html>
@@ -50,6 +53,7 @@ module.exports = {
             <h3>${sectiontitle}</h3>
             ${create_modify_date}
             ${body}
+            ${control}
           </section>
         </nav>
     </body>

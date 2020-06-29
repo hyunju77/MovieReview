@@ -36,7 +36,7 @@ app.get('/', function(request, response) {                          //라우팅
 
       var table = ""
       for(var count in rows) {
-        table += `<td>` + rows[count].post_id + `</td>`
+        table += `<tr><td>` + rows[count].post_id + `</td>`
         if (rows[count].post == null) {
           table += `<td><a href="/post_id=` + rows[count].post_id + `">"` + rows[count].movie + `"에 대한 리뷰</a></td>`
         } else {
@@ -46,7 +46,7 @@ app.get('/', function(request, response) {                          //라우팅
         if (rows[count].modifydate == null) {
           table += `<td>` + rows[count].createdate + `</td>`
         } else {
-          table += `<td>` + rows[count].createdate + `(` + rows[count].modifydate + `)</td>`
+          table += `<td>` + rows[count].createdate + `(` + rows[count].modifydate + `)</td></tr>`
         }
       }
       
@@ -119,14 +119,39 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
                   JOIN movies AS c ON c.movie_id = a.movie_id
                   WHERE post_id = ${filteredId}`;
       database.query(sql, function(error, rows) {
-
-        var html = template.HTML("영화 리뷰 사이트", rows[0].title, rows[0].createdate, rows[0].modifydate, rows[0].description);
+        var html = template.HTML("영화 리뷰 사이트", rows[0].title, rows[0].createdate, rows[0].modifydate, rows[0].description, `
+          <form action="/delete_process" method="post">
+            <input type="hidden" name="id" value="${filteredId}">
+            <input type="submit" value="delete">
+          </form>
+        `);
         response.send(html);
       });
     });
 });
 
-
+app.post(`/delete_process`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var post = qs.parse(body);
+    var filteredId = post.id;
+    var post = qs.parse(body);
+    database.query('DELETE FROM posts WHERE post_id = ?', [filteredId], function(error, result){
+      if(error){
+        throw error;
+      } else {
+        alert("삭제되었습니다.")
+      }
+      fs.unlink(`post_id=${filteredId}`, function(error) {
+        response.writeHead(302, {Location: `/`});
+        response.end();
+      });
+    });
+  });    
+});
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
 
