@@ -1,0 +1,22 @@
+body>div {
+    background-color: #ffffff;
+    padding-top: 5pt;
+    padding-bottom: 10pt;
+}
+
+.h-container:after{ clear: both; display: block; content: '' }
+/*:after*/
+
+.h-container .item {
+    float: left;
+    /*float: left;	왼쪽으로 연속정렬*/
+    width: 100px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+    /*오른쪽 선 속성*/
+}
+
+.h-container .item.last {
+    float: right;
+    border-right: none;
+}

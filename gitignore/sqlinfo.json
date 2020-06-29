@@ -1,0 +1,6 @@
+{
+            "host"     : "localhost",
+            "user"     : "DSU06",
+            "password" : "111111",
+            "database" : "moviereview"
+}
