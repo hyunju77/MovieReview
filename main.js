@@ -234,4 +234,97 @@ app.post(`/create_process`, function(request, response) {
   });
 });
 
+app.post(`/update`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var post = qs.parse(body);
+    var post_id = post.id;
+
+    sql = `SELECT * FROM posts WHERE post_id = ${post_id}`;    
+    database.query(sql, function(error, rows) {
+      var title = rows[0].title;
+      var description = rows[0].description;
+      var movie_id = new Number(rows[0].movie_id);
+      var user_id = rows[0].user_id;
+      movie_id -= 1;
+
+      sql = `SELECT nickname FROM users WHERE user_id = ${user_id}`
+      database.query(sql, function(error, rows) {
+        var nickname = rows[0].nickname;
+
+        sql = `SELECT name FROM movies`
+        database.query(sql, function(error, rows) {
+          var movies = `<select name="movie_name" value="${movie_id}">`;
+          for(var count in rows) {
+            movies += `<option value="${count}">${rows[count].name}</option>`;
+          }
+          movies += `</selcet>`
+      
+          var html = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>게시물 작성</title>
+            </head>
+            <body>
+              <form name="post_editer" action="/update_process" method="post" onsubmit="return data_integrity()">
+                <input type="hidden" name="post_id" value="${post_id}">
+                <p><input type="text" name="edit_title" placeholder = "제목(생략가능)" value="${title}"></input></p>
+                영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="${nickname}">
+                <p><textarea name="edit_description" placeholder = "내용">${description}</textarea><p>
+                <p><input type="submit">
+              </form>
+              <script src="js/html_functions.js"></script>
+            </body>
+          </html>
+          `;
+          
+          response.send(html);
+        });
+      });
+    });
+  });
+});
+
+app.post(`/update_process`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var edit = qs.parse(body);
+    var title = edit.edit_title;
+    var movie = new Number(edit.movie_name);
+    var description = edit.edit_description;
+    var nickname = edit.user_nickname;
+    var post_id = edit.post_id;
+
+    if(title == undefined || title == "undefined") {
+      title = "";
+    }
+    var movie_id =  movie + 1;    
+    var date = new Date();
+    var modifydate = GetFormatDate(date);
+
+    sql = `SELECT user_id FROM users WHERE nickname = "${nickname}";`;
+    database.query(sql, function(error, rows) {
+      var user_id = rows[0].user_id;
+
+      var sql = `UPDATE posts SET title='${title}', description='${description}', modifydate='${modifydate}', user_id='${user_id}', movie_id='${movie_id}' WHERE post_id = ${post_id};`
+
+      database.query(sql, function(error, result){
+        if(error) {
+          throw error;
+        }
+        response.writeHead(302, {Location: `/post_id=${post_id}`});
+        response.end();
+      })
+    });
+  });
+});
+
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));
