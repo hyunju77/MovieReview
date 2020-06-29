@@ -25,7 +25,7 @@ database.connect();
 
 app.use(express.static('html'));
 
-
+{//메인페이지
 app.get('/', function(request, response) {                          //라우팅
   fs.readdir(`./data`, function(error, FileList) {
     //                      post 테이블의 제목, 작성일, 수정일, user_id를 대입하여 users 테이블의 닉네임, movie_id를 대입하여 movies 테이블의 영화이름 을 가져온다.
@@ -73,7 +73,11 @@ app.get('/', function(request, response) {                          //라우팅
               <div id="myMenu">
                   <div class="h-container">
                       <div class="item middle"><a href="/create">리뷰 등록</a></div>
-                      <div class="item middle">menu 2</div>
+                      <div class="item middle">
+                        <form action="/movie_registration" method="post">
+                          <input type="submit" value="영화 등록">
+                        </form>
+                      </div>
                       <div class="item middle">menu 3</div>
                       <div class="item last">login</div>
                   </div>
@@ -111,8 +115,10 @@ app.get('/', function(request, response) {                          //라우팅
     });
   });
 });
+}
 
-app.get(`/post_id=` + `:postId`, function(request, response) {
+{//포스트 열람 (Read)
+  app.get(`/post_id=` + `:postId`, function(request, response) {
     fs.readdir(`./data`, function(error, filelist) {
       var filteredId = path.parse(request.params.postId).base;
       var sql = `SELECT a.title, c.name, a.description, b.nickname, date_format(a.createdate, "%Y-%m-%d") AS createdate, date_format(a.modifydate, "%Y-%m-%d") AS modifydate
@@ -121,14 +127,14 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
                   JOIN movies AS c ON c.movie_id = a.movie_id
                   WHERE post_id = ${filteredId}`;
       database.query(sql, function(error, rows) {
-        var html = template.HTML("영화 리뷰 사이트", rows[0].title, rows[0].createdate, rows[0].modifydate, rows[0].description, `
+        var html = template.Post_Reader_HTML("영화 리뷰 사이트", rows[0].title, rows[0].createdate, rows[0].modifydate, rows[0].description, `
           <form action="/" method="get">
             <input type="submit" value="돌아가기" href="/">
           </form>
         `,`
           <form action="/update" method="post">
             <input type="hidden" name="id" value="${filteredId}">
-            <input type="button" value="변경">
+            <input type="submit" value="변경">
           </form>
         `,`
           <form action="/delete_process" method="post" onsubmit="return recheck()">
@@ -140,27 +146,9 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
       });
     });
 });
+}
 
-app.post(`/delete_process`, function(request, response) {
-  var body = ""
-  request.on('data', function(data){
-    body = body + data;
-  });
-  request.on(`end`, function() {
-    var post = qs.parse(body);
-    var filteredId = post.id;
-    database.query('DELETE FROM posts WHERE post_id = ?', [filteredId], function(error, result){
-      if(error) {
-        throw error;
-      }
-      fs.unlink(`post_id=${filteredId}`, function(error) {
-        response.writeHead(302, {Location: `/`});
-        response.end();
-      });
-    });
-  });    
-});
-
+{//포스트 등록 화면 (Create)
 app.get(`/create`, function(request, response) {
   var sql = `SELECT name FROM movies`
   database.query(sql, function(error, rows) {
@@ -174,29 +162,14 @@ app.get(`/create`, function(request, response) {
     }
     movies += `</selcet>`
 
-    var html = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <title>게시물 작성</title>
-      </head>
-      <body>
-        <form name="post_editer" action="/create_process" method="post" onsubmit="return data_integrity()">
-            <p><input type="text" name="edit_title" placeholder = "제목(생략가능)"></input></p>
-            영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="관리자">
-            <p><textarea name="edit_description" placeholder = "내용"></textarea><p>
-            <p><input type="submit">
-        </form>
-        <script src="js/html_functions.js"></script>
-      </body>
-    </html>
-    `;
-    
+    var html = template.Editer_HTML(movies);
+
     response.send(html);
   });
 });
+}
 
+{//포스트 등록 프로세서
 app.post(`/create_process`, function(request, response) {
   var body = ""
   request.on('data', function(data){
@@ -233,7 +206,9 @@ app.post(`/create_process`, function(request, response) {
     });
   });
 });
+}
 
+{//포스트 수정 화면 (Update)
 app.post(`/update`, function(request, response) {
   var body = ""
   request.on('data', function(data){
@@ -263,25 +238,7 @@ app.post(`/update`, function(request, response) {
           }
           movies += `</selcet>`
       
-          var html = `
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>게시물 작성</title>
-            </head>
-            <body>
-              <form name="post_editer" action="/update_process" method="post" onsubmit="return data_integrity()">
-                <input type="hidden" name="post_id" value="${post_id}">
-                <p><input type="text" name="edit_title" placeholder = "제목(생략가능)" value="${title}"></input></p>
-                영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="${nickname}">
-                <p><textarea name="edit_description" placeholder = "내용">${description}</textarea><p>
-                <p><input type="submit">
-              </form>
-              <script src="js/html_functions.js"></script>
-            </body>
-          </html>
-          `;
+          var html = template.Editer_HTML(movies, post_id, title, nickname, description);
           
           response.send(html);
         });
@@ -289,7 +246,9 @@ app.post(`/update`, function(request, response) {
     });
   });
 });
+}
 
+{//포스터 수정 프로세서
 app.post(`/update_process`, function(request, response) {
   var body = ""
   request.on('data', function(data){
@@ -326,5 +285,29 @@ app.post(`/update_process`, function(request, response) {
     });
   });
 });
+}
+
+{//포스트 삭제 (Delete)
+app.post(`/delete_process`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var post = qs.parse(body);
+    var filteredId = post.id;
+    database.query('DELETE FROM posts WHERE post_id = ?', [filteredId], function(error, result){
+      if(error) {
+        throw error;
+      }
+      fs.unlink(`post_id=${filteredId}`, function(error) {
+        response.writeHead(302, {Location: `/`});
+        response.end();
+      });
+    });
+  });    
+});
+}
+
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));
