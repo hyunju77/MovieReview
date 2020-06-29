@@ -1,11 +1,10 @@
 module.exports = {
-  Post_Reader_HTML:function(title, sectiontitle, createdate, modifydate, description, back, modify, remove) {
-    if(modifydate == null){
-      var create_modify_date = `<h5>게시일 : ${createdate}</h5>`;
+  Post_Reader_HTML:function(title, post_data, comment_data, back, modify, remove) {
+    if(!post_data.modifydate){
+      var create_modify_date = `<h5>게시일 : ${post_data.createdate}</h5>`;
     } else {
-      var create_modify_date = `<h5>게시일 : ${createdate} (수정됨 : ${modifydate})</h5>`;
+      var create_modify_date = `<h5>게시일 : ${post_data.createdate} (수정됨 : ${post_data.modifydate})</h5>`;
     }
-
     return `
       <!DOCTYPE html>
       <html>
@@ -19,9 +18,23 @@ module.exports = {
           <body id="main">
               <div id="myMenu">
                   <div class="h-container">
-                      <div class="item middle">${back}</div>
-                      <div class="item middle">${modify}</div>
-                      <div class="item middle">${remove}</div>
+                    <div class="item middle">
+                      <form action="/" method="get">
+                        <input type="submit" value="돌아가기" href="/">
+                        </form>
+                      </div>
+                      <div class="item middle">
+                        <form action="/update" method="post">
+                          <input type="hidden" name="id" value="${post_data.post_id}">
+                          <input type="submit" value="변경">
+                        </form>
+                      </div>
+                      <div class="item middle">
+                        <form action="/delete_process" method="post" onsubmit="return recheck()">
+                          <input type="hidden" name="id" value="${post_data.post_id}">
+                          <input type="submit" value="삭제">
+                        </form>
+                      </div>
                       <div class="item last">login</div>
                   </div>
               </div>
@@ -37,10 +50,21 @@ module.exports = {
                     </ul>
                 </nav>
                 <section id="post_Section">
-                  <h3>${sectiontitle}</h3>
+                  <h3>${post_data.title}</h3>
                   ${create_modify_date}
-                  ${description}
+                  ${post_data.description}
                 </section>
+                <div>
+                  <table border = 1 id="comments">
+                    <tr>
+                      <th>닉네임</th>
+                      <th>댓글내용</th>
+                      <th>평점</th>
+                      <th>작성일</th>
+                    </tr>
+                    ${comment_data}
+                  </table>
+                </div>
               </nav>
               <script src="js/html_functions.js"></script>
           </body>
@@ -48,7 +72,7 @@ module.exports = {
     `;
   },
 
-  Editer_HTML:function(movies, post_id, title, nickname, description) {
+  Editer_HTML:function(movies, post_data) {
     if(arguments.length == 1) {
       var back = ``
       var form = `
@@ -60,13 +84,13 @@ module.exports = {
       </form>
       `;
     } else {
-      var back = `post_id=${post_id}`
+      var back = `post_id=${post_data.post_id}`
       var form = `
         <form name="post_editer" action="/update_process" method="post" onsubmit="return data_integrity()">
-          <input type="hidden" name="post_id" value="${post_id}">
-          <p><input type="text" name="edit_title" placeholder = "제목(생략가능)" value="${title}"></input></p>
-          영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="${nickname}">
-          <p><textarea name="edit_description" placeholder = "내용">${description}</textarea><p>
+          <input type="hidden" name="post_id" value="${post_data.post_id}">
+          <p><input type="text" name="edit_title" placeholder = "제목(생략가능)" value="${post_data.title}"></input></p>
+          영화 제목 : ${movies}<input type="hidden" name="user_nickname" value="${post_data.nickname}">
+          <p><textarea name="edit_description" placeholder = "내용">${post_data.description}</textarea><p>
           <p><input type="submit">
         </form>
       `;
@@ -100,13 +124,6 @@ module.exports = {
       </body>
     </html>
     `;
-  },
-
-  comment_part_HTML:function() {
-
-    return `
-
-    `
   },
 
   GetFormatDate:function(date) {
