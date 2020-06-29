@@ -25,9 +25,19 @@ database.connect();
 app.use(express.static('html'));
 
 
-app.get('/', function(request, response) {                         //라우팅(긴버전)
+app.get('/', function(request, response) {                          //라우팅(긴버전)
   fs.readdir(`./data`, function(error, FileList) {
-    database.query(``, function(error, rows, fields) {
+    //sql 문 post 테이블의 모든 데이터를 가져오고 post_id로 정렬
+    var sql = `SELECT a.title AS post, c.name AS movie, b.nickname AS author, a.createdate, a.modifydate FROM posts AS a JOIN users AS b ON b.user_id = a.user_id JOIN movies AS c ON c.movie_id = a.movie_id;`;
+    database.query(sql, function(error, rows) {
+      var list = rows[0];
+      console.log(rows[0].post);
+      console.log(rows[0].movie);
+      console.log(rows[0].author);
+      console.log(rows[0].createdate);
+      if(rows[0].modifydate == "null") {
+        console.log(rows[0].modifydate);
+      }
       var html = template.HTML("영화 리뷰 사이트", "", `
         
       `, "");
