@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 25565;
 const fs = require('fs');
-const template = require('./html/js/template.js');
 const mysql = require('mysql');
+const hostinfo = require(`./gitignore/port.json`);
 const sqlserver = require(`./gitignore/sqlinfo.json`);
+const template = require('./html/js/template.js');
 
 const sanitizeHtml = require('sanitize-html');
 const url = require('url');
@@ -12,28 +12,34 @@ const path = require('path');
 const http = require('http');
 const qs = require('querystring');
 
-var db = mysql.createConnection({
+var port = hostinfo.port;
+var database = mysql.createConnection({
   host     : sqlserver.host,
   user     : sqlserver.user,
   password : sqlserver.password,
   database : sqlserver.database
 });
 
+database.connect();
+
 app.use(express.static('html'));
 
-app.get('/', function(req, res) {                         //라우팅(긴버전)
+
+app.get('/', function(request, response) {                         //라우팅(긴버전)
   fs.readdir(`./data`, function(error, FileList) {
-    var description = "Hello, Node.js";
-    // var list = template.list(filelist);
-    var html = template.HTML("영화 리뷰 사이트", "", "", "");
-    res.writeHead(200);
-    res.end(html);
-  })
+    database.query(``, function(error, rows, fields) {
+      var html = template.HTML("영화 리뷰 사이트", "", `
+        
+      `, "");
+      response.send(html);
+    });
+  });
 });
-app.get('/page', function(req, res) {
-  return res.send(`/page`);
+
+app.get('/page', function(request, response) {
+  response.send(`/page`);
 });
-  
+
 
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
@@ -50,12 +56,6 @@ var template = require('./html/js/template.js');
 var path = require('path');
 var sanitizeHtml = require('sanitize-html');
 var mysql = require('mysql');
-var db = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'DSU06',
-  password : '111111',
-  database : 'opentutorials'
-});
 
 db.connect();
 app.use(express.static('html'));
