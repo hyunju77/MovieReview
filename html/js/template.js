@@ -9,11 +9,11 @@ module.exports = {
         <style>
             body {background-color: azure;}
         </style>
-        <script src="./html/js/jquery-3.5.1.min.js"></script>
-        <link rel="stylesheet" href="./html/css/title_header.css">
-        <link rel="stylesheet" href="./html/css/menu_bar.css">
-        <link rel="stylesheet" href="./html/css/nav.css">
-        <link rel="stylesheet" href="./html/css/display_main.css">
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <link rel="stylesheet" href="css/title_header.css">
+        <link rel="stylesheet" href="css/menu_bar.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="css/display_main.css">
 
     </head>
     <body id="main">
@@ -45,8 +45,8 @@ module.exports = {
           ${body}
         </section>
         
-        <script src="./html/js/displayer.js"></script>
-        <script src="./html/js/initializer.js"></script>
+        <script src="js/displayer.js"></script>
+        <script src="js/initializer.js"></script>
         <script src=""></script>
         <script src=""></script>
     </body>
