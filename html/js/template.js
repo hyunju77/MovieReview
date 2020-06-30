@@ -58,7 +58,26 @@ module.exports = {
                   <form name="comment_editer" action="/comment_create_process" method="post" onsubmit="return comment_data_intergrity()">
                     <input type="hidden" name="post_id" value="${post_data.post_id}">
                     <input type="hidden" name="user_id" value="1">
-                    <input type="text" name="edit_description" placeholder="댓글 입력">
+                    <input type="hidden" name="score" value="2.5">
+                    <input type="text" name="description" placeholder="댓글 입력">
+                    <table>
+                      <tr>
+                        <td> 평점 : </td>
+                        <td>
+                          <div class="starRev">
+                            <span class="starR1 on">별1_왼쪽</span>
+                            <span class="starR2 on">별1_오른쪽</span>
+                            <span class="starR1 on">별2_왼쪽</span>
+                            <span class="starR2 on">별2_오른쪽</span>
+                            <span class="starR1 on">별3_왼쪽</span>
+                            <span class="starR2">별3_오른쪽</span>
+                            <span class="starR1">별4_왼쪽</span>
+                            <span class="starR2">별4_오른쪽</span>
+                            <span class="starR1">별5_왼쪽</span>
+                            <span class="starR2">별5_오른쪽</span>
+                          </div>
+                        </td>
+                    </table>
                     <input type="submit" value="등록">
                   </form>
                   <table border = 1 id="comments">

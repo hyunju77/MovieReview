@@ -15,7 +15,7 @@ function post_data_integrity() {
         return false;
     }
     if(data.edit_title.value.length == 0) {
-        data.edit_title.value = "undefined";
+        data.edit_title.value = " ";
     }
     if(data.edit_description.value.length == 0) {
         alert("내용을 입력해주십시오.");
@@ -28,20 +28,31 @@ function post_data_integrity() {
     return true;
 }
 
+//댓글 내용 유효성 검사
 function comment_data_intergrity() {
     var data = document.comment_editer;
-    if(comment_editer.edit_description.value.length == 0) {
+    if(data.description.value.length == 0) {
         alert("내용을 입력해 주시오.");
-        comment_editer.edit_description.focus();
+        data.description.focus();
         return false;
     }
-    if(comment_editer.edit_description.value.length > 255) {
+    if(data.description.value.length > 255) {
         alert("댓글 길이가 초과했습니다.\n(최대 255자)");
-        comment_editer.edit_description.focus();
+        data.description.focus();
         return false;
     }
+
+    var score = $('.starR1.on').length + $('.starR2.on').length
+    data.score.value = score;
     return true;
 }
+
+//포스트 별점 주기
+$('.starRev span').click(function(){
+    $(this).parent().children('span').removeClass('on');
+    $(this).addClass('on').prevAll('span').addClass('on');
+    return false;
+  });
 
 //삭제 확인 스크립트
 function recheck() {

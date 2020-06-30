@@ -38,7 +38,7 @@ app.get('/', function(request, response) {                          //라우팅
       for(var count in rows) {
         var numbering = new Number(count);
         table += `<tr><td>` + (numbering+1) + `</td>`
-        if (rows[count].post == null) {
+        if (rows[count].post == " ") {
           table += `<td><a href="/post_id=` + rows[count].post_id + `">"` + rows[count].movie + `"에 대한 리뷰</a></td>`
         } else {
           table += `<td><a href="/post_id=` + rows[count].post_id + `">` + rows[count].post + `[` + rows[count].movie + `]</a></td>`
@@ -71,7 +71,7 @@ app.get('/', function(request, response) {                          //라우팅
               </header>
               <div id="myMenu">
                   <div class="h-container">
-                      <div class="item middle"><a href="/posts_create">리뷰 등록</a></div>
+                      <div class="item middle"><a href="/post_create">리뷰 등록</a></div>
                       <div class="item middle">
                         <form action="/movie_registration" method="post">
                           <input type="submit" value="영화 등록">
@@ -160,7 +160,7 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
 }
 
 {//포스트 등록 화면 (Create)
-app.get(`/posts_create`, function(request, response) {
+app.get(`/post_create`, function(request, response) {
   var sql = `SELECT name FROM movies`
   database.query(sql, function(error, rows) {
     if(error) {
@@ -181,7 +181,7 @@ app.get(`/posts_create`, function(request, response) {
 }
 
 {//포스트 등록 프로세서
-app.post(`/posts_create_process`, function(request, response) {
+app.post(`/post_create_process`, function(request, response) {
   var body = ""
   request.on('data', function(data){
     body = body + data;
@@ -194,12 +194,9 @@ app.post(`/posts_create_process`, function(request, response) {
     var nickname = edit.user_nickname;
     var user_id;
 
-    if(title == undefined || title == "undefined") {
-      title = "";
-    }
     var movie_id =  movie + 1;    
     var date = new Date();
-    var createdate = GetFormatDate(date);
+    var createdate = template.GetFormatDate(date);
 
     sql = `SELECT user_id FROM users WHERE nickname = "${nickname}";`;
     database.query(sql, function(error, rows) {
@@ -271,12 +268,9 @@ app.post(`/post_update_process`, function(request, response) {
     var nickname = edit.user_nickname;
     var post_id = edit.post_id;
 
-    if(title == undefined || title == "undefined") {
-      title = "";
-    }
     var movie_id =  movie + 1;    
     var date = new Date();
-    var modifydate = GetFormatDate(date);
+    var modifydate = template.GetFormatDate(date);
 
     sql = `SELECT user_id FROM users WHERE nickname = "${nickname}";`;
     database.query(sql, function(error, rows) {
@@ -319,7 +313,27 @@ app.post(`/post_delete_process`, function(request, response) {
 }
 
 {//댓글 추가
+app.post(`/comment_create_process`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var edit = qs.parse(body);
+    var date = new Date();
+    edit.createdate = template.GetFormatDate(date);
 
+    var sql = `INSERT INTO comments VALUES (NUll, '${edit.description}', '${edit.score}', '${edit.createdate}', '${edit.post_id}', '${edit.user_id}');`
+    database.query(sql, function(error, result){
+      if(error) {
+        throw error;
+      }
+      response.writeHead(302, {Location: `/post_id=${edit.post_id}`});
+      response.end();
+      
+    });
+  });
+});
 }
 
 
