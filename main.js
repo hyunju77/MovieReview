@@ -332,15 +332,13 @@ app.post(`/comment_create_process`, function(request, response) {
     var edit = qs.parse(body);
     var date = new Date();
     edit.createdate = template.GetFormatDate(date);
-
-    var sql = `INSERT INTO comments VALUES (NUll, '${edit.description}', '${edit.score}', '${edit.createdate}', '${edit.post_id}', '${edit.user_id}');`
+    var sql = `INSERT INTO comments VALUES (NUll, '${edit.description}', '${edit.score}', '${edit.createdate}', '${edit.user_id}', '${edit.post_id}');`
     database.query(sql, function(error, result){
       if(error) {
         throw error;
       }
       response.writeHead(302, {Location: `/post_id=${edit.post_id}`});
       response.end();
-      
     });
   });
 });
@@ -366,24 +364,23 @@ app.post(`/comment_create_process`, function(request, response) {
   });
   }
 
-
 {//댓글 삭제
-  app.post(`/comment_delete_process`, function(request, response) {
-    var body = ""
-    request.on('data', function(data){
-      body = body + data;
-    });
-    request.on(`end`, function() {
-      var edit = qs.parse(body);
-      database.query('DELETE FROM comments WHERE comment_id = ?', [edit.comment_id], function(error, result){
-        if(error) {
-          throw error;
-        }
-        response.writeHead(302, {Location: `/post_id=${edit.post_id}`});
-        response.end();
-      });
+app.post(`/comment_delete_process`, function(request, response) {
+  var body = ""
+  request.on('data', function(data){
+    body = body + data;
+  });
+  request.on(`end`, function() {
+    var edit = qs.parse(body);
+    database.query('DELETE FROM comments WHERE comment_id = ?', [edit.comment_id], function(error, result){
+      if(error) {
+        throw error;
+      }
+      response.writeHead(302, {Location: `/post_id=${edit.post_id}`});
+      response.end();
     });
   });
-  }
+});
+}
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));
