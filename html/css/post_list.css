@@ -1,0 +1,26 @@
+#warapper {
+    display: table;
+    width: 100%;
+}
+
+nav {
+    background-color: #626586;
+    float:left;
+    padding: 7.5pt 0.5% 5pt 0.5%;
+    width: 12%;
+    height : 525pt;
+}
+
+section {
+    background-color: #e3e3e3;
+    text-align:left;
+    float:left;
+    width: 85%;
+    padding: 7.5pt 1% 5pt 1%;
+    height : 525pt;
+}
+
+#post_list {
+    width : 100%;
+    text-align : center;
+}
