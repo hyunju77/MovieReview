@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
+	<head>
+		<meta charset="utf-8">
         <title></title>
-
-        <!-- include libraries(jQuery, bootstrap) -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-        <!-- include summernote css/js -->
-        <link href="summernote-0.8.18-dist/summernote.min.css" rel="stylesheet">
-        <script src="summernote-0.8.18-dist/summernote.min.js"></script>
-
+        <style>
+            body {background-color: azure;}
+        </style>
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script src="html_function.js"></script>
+        <script src="template.js"></script>
+        <link rel="stylesheet" href="css/post_read.css">
+        <link rel="stylesheet" href="css/post_list.css">
         <link rel="stylesheet" href="css/commen.css">
-        <link rel="stylesheet" href="css/post_editer.css">
     </head>
     <body id="main">
         <header>
@@ -22,27 +19,33 @@
         </header>
         <div id="myMenu">
             <div class="h-container">
-                <div class="item middle">menu 1</div>
-                <div class="item middle">menu 2</div>
-                <div class="item middle">menu 3</div>
-                <div class="item last">login</div>
+                <div class="top_menu"><a href="movie_list">영화목록</a></div>
+                <div class="top_menu"><a href="contact_us">문의사항</a></div>
+                <div class="top_menu"><a href="contact_us"> menu </a></div>
+                <div class="item last"><a href="contact_us">log in</a></div>
+                <!-- class="item middle" → class="top_menu"
+                    class="item last" → class="go_login"-->
             </div>
         </div>
-            <section id="mySection">
-                <form method="post">
-                    <textarea id="summernote" name="editordata"></textarea>
-                </form>
-            </section>
 
-        <script>
-            $(document).ready(function() {
-                $('#summernote').summernote({
-                  height    : 600, 
-                  minheight : 600,
-                  maxheight : null,
-                  focus     : true
-                });
-            });
-        </script>
+        <nav id="myNav">
+            navigation
+            <ul>장르
+                <a href=""><li>장르1</li></a>
+                <a href=""><li>장르2</li></a>
+            </ul>
+            <ul>연도
+                <a href=""><li>(2000~2010)</li></a>
+                <a href=""><li>(2010~2020)</li></a>
+            </ul>
+        </nav>
+        <section id="mySection">
+            <!-- JavaScript로 동적 변화 displayer.js 참고 -->
+        </section>
+        
+        <script src="js/displayer.js"></script>
+        <script src="js/initializer.js"></script>
+        <script src=""></script>
+        <script src=""></script>
     </body>
 </html>

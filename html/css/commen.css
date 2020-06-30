@@ -1,3 +1,5 @@
+header div div 
+
 body {
     background-color: azure;
 }
@@ -21,9 +23,15 @@ body>div {
     display: block;
     content: ''
 }
+
+.h-container:after{
+    clear: both;
+    display: block;
+    content: ''
+}
 /*:after*/
 
-.h-container .item {
+.h-container .top_menu {
     float: left;
     /*float: left;	왼쪽으로 연속정렬*/
     width: 100px;
