@@ -1,15 +1,23 @@
-header div div 
+header {background-color: #d1d2e7;height: 180px;width: 98%;padding: 1%;color: black;}
+.top_menu {width: 100%; height: 100%;}
+.top_menu:after{clear: both; display: block; content: '' }
+.top_menu .go_menu{float: left; width: 100px; height: 100%; text-align: center; border-right: 1px solid #dddddd;}
+.top_menu .go_login {float: right; border-right: none;}
+#navigation { background-color: #626586; float:left; display: table-cell; padding: 5pt 0.5% 5pt 0.5%; width: 12%; height: 518pt; }
+
+.conbox {width: 1000px; height: 700px; margin: 100px auto 0 auto;}
+
+.img_movie {width: 280px; float: left;}
+.img_movie img{width: 280px;}
+.movie_description {width: 450px; float: left; padding-right: 20px 20px 20px 40px;}
+.movie_description h4 {font-size: 30px; font-weight: 700; color: #626586; line-height: 30px;}
+.movie_description ul li {font-weight: 700px;}
+.movie_description p {padding: 10px 30px 0px 0px; font-size: ; color: # ;}
+.btn {width: 150px; display: inline-block; height: 35px; margin-top: 20px; line-height: 35px; border-radius: 5px; text-align: center; background: #626586;}
+
 
 body {
     background-color: azure;
-}
-
-header {
-    background-color: #d1d2e7;
-    height: 180px;
-    width: 98%;
-    padding: 1%;
-    color: black;
 }
 
 body>div {
@@ -18,24 +26,9 @@ body>div {
     padding-bottom: 10pt;
 }
 
-.h-container:after{clear: both; display: block; content: '' }
-.h-container .top_menu {float: left; width: 100px; text-align: center; border-right: 1px solid #ddd;}
-.h-container .go_login {float: right; border-right: none;}
-
-#container {width: 100%; height: 100px; position: relative; max-width: 1200px; margin:0 auto; }
-
 .movie li:before {content: attr(data-url);}
 .movie li[data-url]{color:#000000;}
 
-
-#navigation {
-    background-color: #626586;
-    float:left;
-    display: table-cell;
-    padding: 5pt 0.5% 5pt 0.5%;
-    width: 12%;
-    height: 518pt;
-}
 
 #warapper {
     display: table;
@@ -57,14 +50,6 @@ section {
     text-align : center;
 }
 
-nav {
-    background-color: #626586;
-    float:left;
-    display: table-cell;
-    padding: 5pt 0.5% 5pt 0.5%;
-    width: 12%;
-    height: 518pt;
-}
 
 #post_Section {
     background-color: #e3e3e3;

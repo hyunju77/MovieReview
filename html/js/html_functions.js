@@ -114,3 +114,11 @@ $(".movie li").click(function{
     });
 });
 
+//div 안에 페이지 불러오기 
+$(document).ready(function(){
+
+    $("#div1").load("가져올페이지");
+
+});
+
+
