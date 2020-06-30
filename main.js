@@ -332,7 +332,7 @@ app.post(`/comment_create_process`, function(request, response) {
     var edit = qs.parse(body);
     var date = new Date();
     edit.createdate = template.GetFormatDate(date);
-    var sql = `INSERT INTO comments VALUES (NUll, '${edit.description}', '${edit.score}', '${edit.createdate}', '${edit.user_id}', '${edit.post_id}');`
+    var sql = `INSERT INTO comments VALUES (NUll, '${edit.post_id}', '${edit.user_id}', '${edit.description}', '${edit.score}', '${edit.createdate}');`
     database.query(sql, function(error, result){
       if(error) {
         throw error;
