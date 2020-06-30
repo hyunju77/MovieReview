@@ -98,3 +98,19 @@ function recheck(target) {
         return false;
     }
 }
+
+/*사진이나 제목 클릭 → 해당 페이지 불러오기*/
+$(".movie li").click(function{
+    var _this =$(this);     //선택한 li의 url을 찾는다
+    var liurl =_this.data("url");       
+    $(".notebook").html();      //새로운 내용 갱신
+    $.ajax({        //http 요청 전송
+        type : 'post'       
+        url : liurl,        
+        dataType : 'html',  
+        success : function(data) {
+            $(".notebook").html(data);
+        }
+    });
+});
+

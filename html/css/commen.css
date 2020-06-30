@@ -18,32 +18,15 @@ body>div {
     padding-bottom: 10pt;
 }
 
-.h-container:after{
-    clear: both;
-    display: block;
-    content: ''
-}
+.h-container:after{clear: both; display: block; content: '' }
+.h-container .top_menu {float: left; width: 100px; text-align: center; border-right: 1px solid #ddd;}
+.h-container .go_login {float: right; border-right: none;}
 
-.h-container:after{
-    clear: both;
-    display: block;
-    content: ''
-}
-/*:after*/
+#container {width: 100%; height: 100px; position: relative; max-width: 1200px; margin:0 auto; }
 
-.h-container .top_menu {
-    float: left;
-    /*float: left;	왼쪽으로 연속정렬*/
-    width: 100px;
-    text-align: center;
-    border-right: 1px solid #ddd;
-    /*오른쪽 선 속성*/
-}
+.movie li:before {content: attr(data-url);}
+.movie li[data-url]{color:#000000;}
 
-.h-container .item.last {
-    float: right;
-    border-right: none;
-}
 
 #navigation {
     background-color: #626586;

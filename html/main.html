@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/post_list.css">
         <link rel="stylesheet" href="css/commen.css">
     </head>
-    <body id="main">
+    <body>
         <header>
             pagetitle
         </header>
@@ -21,7 +21,7 @@
             <div class="h-container">
                 <div class="top_menu"><a href="movie_list">영화목록</a></div>
                 <div class="top_menu"><a href="contact_us">문의사항</a></div>
-                <div class="item last"><a href="contact_us">log in</a></div>
+                <div class="go_login"><a href="go_login">log in</a></div>
                 <!-- class="item middle" → class="top_menu"
                     class="item last" → class="go_login"-->
             </div>
@@ -38,14 +38,14 @@
             </ul>
         </nav>
         <section class="container">
-            <section>
+            <section class="movie_list">
                 <div class="movie_list">
                     <button class="go_left"> << </button>
                     <button class="go_right"> >> </button>
-                    <div>
+                    <div class="movie">
                         <ul>
-                            <li><a href="">영화이름1(개봉년도)</a></li>
-                            <li><a href="">영화이름2(개봉년도)</a></li>
+                            <li data-url="move1.html">영화이름1(개봉년도)</li>
+                            <li data-url="move2.html">영화이름2(개봉년도)</li>
                         </ul>
                     </div>
                 </div>
