@@ -144,16 +144,16 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
           comment_table += `
             <tr>
               <td>${comment[count].nickname}</td>
-              <td>${comment[count].description}</td>
+              <td id="${comment[count].comment_id}">${comment[count].description}</td>
               <td>${comment[count].score}</td>
               <td>${comment[count].createdate}</td>
-              <td>
-
+              <td id="${comment[count].comment_id}_edit" >
+                <input type="button" value="수정" onclick="comment_edit(${comment[count].comment_id}, ${comment[count].post_id})">
               </td>
               <td>
                 <form action="/comment_delete_process" method="post" onsubmit="return recheck(2)">
-                  <input type="hidden" name="post_id" value="${rows[count].post_id}">
-                  <input type="hidden" name="comment_id" value="${rows[count].comment_id}">
+                  <input type="hidden" name="post_id" value="${comment[count].post_id}">
+                  <input type="hidden" name="comment_id" value="${comment[count].comment_id}">
                   <input type="submit" value="삭제">
                 </form>
               </td>
@@ -354,7 +354,7 @@ app.post(`/comment_create_process`, function(request, response) {
     });
     request.on(`end`, function() {
       var edit = qs.parse(body);
-      var sql = ``
+      var sql = `UPDATE comments SET description='${edit.description}' WHERE comment_id = ${edit.comment_id}`
       database.query(sql, function(error, result){
         if(error) {
           throw error;

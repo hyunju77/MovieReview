@@ -29,8 +29,12 @@ function post_data_integrity() {
 }
 
 //댓글 내용 유효성 검사
-function comment_data_intergrity() {
-    var data = document.comment_editer;
+function comment_data_intergrity(mod) {
+    if(mod == "creater") {
+        var data = document.comment_creater;    
+    } else if(mod == "editer") {
+        var data = document.comment_editer;
+    }
     if(data.description.value.length == 0) {
         alert("내용을 입력해 주시오.");
         data.description.focus();
@@ -54,12 +58,39 @@ $('.starRev span').click(function(){
     return false;
   });
 
-//삭제 확인 스크립트
+//댓글 수정을 위한 텍스트박스 제공
+function comment_edit(comment_id, post_id) {
+    var target = document.getElementById(comment_id);
+    var original = target.innerHTML;
+    target.innerHTML = `
+        <form name="comment_editer" action="/comment_update_process" method="post" onsubmit="return comment_data_intergrity(editer)">
+            <input type="hidden" name="comment_id" value="${comment_id}">
+            <input type="hidden" name="post_id" value="${post_id}">
+            <input type="text" name="description" placeholder="댓글 입력" value="${original}">
+            <input type="submit" value="수정">
+        </form>
+    `;
+    document.getElementById(`${comment_id}_edit`).innerHTML = `
+        <input type="button" value="취소" onclick='comment_edit_cancel(${comment_id}, "${original}", ${post_id})'>
+    `;
+}
+
+//댓글 수정 취소
+function comment_edit_cancel(comment_id, original, post_id) {
+    document.getElementById(`${comment_id}`).innerHTML = original;
+    document.getElementById(`${comment_id}_edit`).innerHTML = `
+        <input type="button" value="수정" onclick="comment_edit(${comment_id}, ${post_id})">
+    `;
+}
+
+
+
+  //삭제 확인 스크립트
 function recheck(target) {
     if(target == 1) {
-        target = "게시물"
+        target = "게시물";
     } else if(target = 2) {
-        target = "댓글"
+        target = "댓글";
     }
     if(confirm(`이 ${target}을 삭제하시겠습니까?\n삭제된 ${target}의 내용은 복구할 수 없습니다.`)) {
         return true;
