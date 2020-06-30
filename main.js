@@ -128,7 +128,7 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
     database.query(sql, function(error, rows) {
       var post_data = rows[0];
       post_data.post_id = filteredId;
-      var sql = `SELECT b.nickname, a.description, a.score, date_format(a.createdate, "%Y-%m-%d") AS createdate
+      var sql = `SELECT b.nickname, a.description, a.score, date_format(a.createdate, "%Y-%m-%d") AS createdate, a.comment_id, a.post_id
                   FROM comments AS a
                   JOIN users AS b
                   ON a.user_id = b.user_id
@@ -147,6 +147,16 @@ app.get(`/post_id=` + `:postId`, function(request, response) {
               <td>${comment[count].description}</td>
               <td>${comment[count].score}</td>
               <td>${comment[count].createdate}</td>
+              <td>
+
+              </td>
+              <td>
+                <form action="/comment_delete_process" method="post" onsubmit="return recheck(2)">
+                  <input type="hidden" name="post_id" value="${rows[count].post_id}">
+                  <input type="hidden" name="comment_id" value="${rows[count].comment_id}">
+                  <input type="submit" value="삭제">
+                </form>
+              </td>
             </tr>
           `
         }            
@@ -344,7 +354,13 @@ app.post(`/comment_create_process`, function(request, response) {
     });
     request.on(`end`, function() {
       var edit = qs.parse(body);
-
+      database.query('DELETE FROM comments WHERE comment_id = ?', [edit.comment_id], function(error, result){
+        if(error) {
+          throw error;
+        }
+        response.writeHead(302, {Location: `/post_id=${edit.post_id}`});
+        response.end();
+      });
     });
   });
   }

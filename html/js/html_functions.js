@@ -55,8 +55,13 @@ $('.starRev span').click(function(){
   });
 
 //삭제 확인 스크립트
-function recheck() {
-    if(confirm("이 게시물을 삭제하시겠습니까?\n삭제된 게시물의 내용은 복구할 수 없습니다.")) {
+function recheck(target) {
+    if(target == 1) {
+        target = "게시물"
+    } else if(target = 2) {
+        target = "댓글"
+    }
+    if(confirm(`이 ${target}을 삭제하시겠습니까?\n삭제된 ${target}의 내용은 복구할 수 없습니다.`)) {
         return true;
     } else {
         return false;

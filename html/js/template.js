@@ -30,7 +30,7 @@ module.exports = {
                         </form>
                       </div>
                       <div class="item middle">
-                        <form action="/post_delete_process" method="post" onsubmit="return recheck()">
+                        <form action="/post_delete_process" method="post" onsubmit="return recheck(1)">
                           <input type="hidden" name="id" value="${post_data.post_id}">
                           <input type="submit" value="삭제">
                         </form>
@@ -86,6 +86,8 @@ module.exports = {
                       <th>댓글내용</th>
                       <th>평점</th>
                       <th>작성일</th>
+                      <th>수정</th>
+                      <th>삭제</th>
                     </tr>
                     ${comment_data}
                   </table>
