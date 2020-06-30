@@ -336,5 +336,17 @@ app.post(`/comment_create_process`, function(request, response) {
 });
 }
 
+{//댓글 삭제
+  app.post(`/comment_delete_process`, function(request, response) {
+    var body = ""
+    request.on('data', function(data){
+      body = body + data;
+    });
+    request.on(`end`, function() {
+      var edit = qs.parse(body);
+
+    });
+  });
+  }
 
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));
