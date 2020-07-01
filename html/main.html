@@ -14,28 +14,30 @@
             <h1>영화 추천 페이지</h1>
         </header>
         <section class="top_menu">
-                <div class="go_menu"><a href="movie_list">영화목록</a></div>
-                <div class="go_menu"><a href="contact_us">영화등록</a></div>
-                <div class="go_sign"><a href="go_sign">회원가입</a></div>
-                <div class="go_login"><a href="go_login">log in</a></div>
+                <div class="go_menu"><a href="movie_list" target="view">영화목록</a></div>
+                <div class="go_menu"><a href="contact_us" target="view">영화등록</a></div>
+                <div class="go_sign"><a href="go_sign" target="view">회원가입</a></div>
+                <div class="go_login"><a href="go_login" target="view">log in</a></div>
         </section>
         <section id="container">
             <section class="content" id="navigation">
                 <nav>
                     <ul>장르
-                        <li><a href="list_drama.html">드라마</a></li>
-                        <li><a href="list_action.html">액션</a></li>
+                        <li><a href="list_drama.html" target="view">드라마</a></li>
+                        <li><a href="list_action.html" target="view">액션</a></li>
                     </ul>
                     <ul>연도
-                        <li><a href="list_90_00.html">(1990~2000)</a></li>
-                        <li><a href="list_00_10.html">(2000~2010)</a></li>
-                        <li><a href="list_10_20.html">(2010~2020)</a></li>
+                        <li><a href="list_90_00.html" target="view">(1990~2000)</a></li>
+                        <li><a href="list_00_10.html" target="view">(2000~2010)</a></li>
+                        <li><a href="list_10_20.html" target="view">(2010~2020)</a></li>
                     </ul>
                 </nav>
             </section>
     <!-- 내용 페이지 -->
             <section class="content" id="center">
-                <div id="box_office" style="border: solid; width: 400px; height: 400px;">인기영화</div>
+                <div id="box_office" style="border: solid; width: 700px; height: 900px;">
+                    <iframe src="" name="view" width="100%" height="100%" frameborder=""></iframe>
+                </div>
                 <br><br>
                 <div>영화목록</div>
                 <ul>
@@ -44,7 +46,9 @@
                     <li></li>
                 </ul>
                 <section>
-                    <div id="description_box"></div>  <!-- movie1.html 이 오는 곳 -->
+                    <div id="description_box">
+                        
+                    </div>  <!-- movie1.html 이 오는 곳 -->
                 </section>
                         <button class="go_left"> << </button>
                         <button class="go_right"> >> </button>
