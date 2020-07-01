@@ -1,10 +1,27 @@
-header {background-color: #d1d2e7;height: 180px;width: 98%;padding: 1%;color: black;}
-.top_menu {width: 100%; height: 100%;}
+body {width: 100%; height: 100%; position: relative; max-width: 1200px;}
+/*title*/
+header {background-color: #d1d2e7;height: 180px;width: 100%; padding: 1%; color:#626586;}
+header h1 {font-size: 50px; margin: 60px 30px auto;}
+/*top_menu*/
+.top_menu {width: 100%; height: 100%; margin:10px 10px 10px 10px;}
 .top_menu:after{clear: both; display: block; content: '' }
-.top_menu .go_menu{float: left; width: 100px; height: 100%; text-align: center; border-right: 1px solid #dddddd;}
-.top_menu .go_login {float: right; border-right: none;}
-#navigation { background-color: #626586; float:left; display: table-cell; padding: 5pt 0.5% 5pt 0.5%; width: 12%; height: 518pt; }
+.top_menu a {color: #626586; text-decoration-line: none;}
+.top_menu .go_menu{float: left; width: 100px; height: 100%; text-align: center; border-right: 1px solid #626586;}
+.top_menu .go_login {float: right; border-right: none; width: 100px; height: 100%;}
+.top_menu .go_sign {float: right; border-right: none; width: 100px; height: 100%; text-align: center; border-left: 1px solid #626586;}
 
+#container { background-color: #d1d2e7; width: 100%; height: 100%; position: relative;}
+#container .content{ background-color: #d1d2e7; position: absolute;}
+
+/*오른쪽 카테고리(navigation)*/
+#container #navigation { background-color: #626586; float:left; display: table-cell; padding: 5pt 0.5% 5pt 0.5%; width: 15%; height: 518pt; left: 0%}
+#container #navigation ul {list-style: none; padding: 10px 10px 10px 10px;}
+#container #navigation ul li a {color: #000000; text-decoration-line: none;}
+/*center*/
+#container #center { background-color:#e3e3e3; float:left; display: table-cell; padding: 5pt 0.5% 5pt 0.5%; width: 85%; height: 518pt; left: 15%}
+
+/**/
+#box_office {padding: 50px 100px 50px 100px;}
 .conbox {width: 1000px; height: 700px; margin: 100px auto 0 auto;}
 
 .img_movie {width: 280px; float: left;}
@@ -14,36 +31,14 @@ header {background-color: #d1d2e7;height: 180px;width: 98%;padding: 1%;color: bl
 .movie_description ul li {font-weight: 700px;}
 .movie_description p {padding: 10px 30px 0px 0px; font-size: ; color: # ;}
 .btn {width: 150px; display: inline-block; height: 35px; margin-top: 20px; line-height: 35px; border-radius: 5px; text-align: center; background: #626586;}
-
-
-body {
-    background-color: azure;
-}
-
-body>div {
-    background-color: #ffffff;
-    padding-top: 5pt;
-    padding-bottom: 10pt;
-}
+/*center*/
+body .container {width: 25%; height: 100%; position: absolute;}
 
 .movie li:before {content: attr(data-url);}
 .movie li[data-url]{color:#000000;}
 
 
-#warapper {
-    display: table;
-    width: 100%;
-}
 
-
-section {
-    background-color: #e3e3e3;
-    text-align:left;
-    float:left;
-    width: 85%;
-    padding: 7.5pt 1% 5pt 1%;
-    height : 525pt;
-}
 
 #post_list {
     width : 100%;
