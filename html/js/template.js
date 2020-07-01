@@ -162,3 +162,7 @@ module.exports = {
     return  year + '-' + month + '-' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
   }
 }
+
+$(document).ready(function(){
+  $("#description_box").load("movie1.html");
+});
